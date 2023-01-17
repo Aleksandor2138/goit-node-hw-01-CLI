@@ -33,20 +33,22 @@ async function getContactById(contactId) {
 
 async function removeContact(contactId) {
     const contacts = await readContacts();
-    const remuve = contacts.filter((contact) => contact.id === contactId.toString());
+    const remuve = contacts.filter((contact) => contact.id !== contactId.toString());
     updateContacts(remuve);
+    listContacts();
 }
 
 async function addContact(name, email, phone) {
-    let contacts = await listContacts();
     const newContact = {
         id: id().toString(),
         name: name,
         email: email,
         phone: phone,
     };
+    let contacts = await readContacts();
     contacts.push(newContact);
     updateContacts(contacts);
+    listContacts();
 }
 
 module.exports = {
